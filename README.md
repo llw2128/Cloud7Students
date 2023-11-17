@@ -1,6 +1,6 @@
-# E6156 - Topics in SW Engineering: Cloud Computing<br>First Example Microservice
+# Cloud7 Students Microservice
 
-__Author:__ Alayna Nguyen
+__Author:__ Team Cloud7
 
 ## Local Project Execution
 
