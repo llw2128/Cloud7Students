@@ -1,4 +1,5 @@
 from fastapi import FastAPI, Response
+from pydantic import BaseModel
 
 # I like to launch directly and not use the standard FastAPI startup
 import uvicorn
@@ -9,10 +10,17 @@ app = FastAPI()
 
 students_resource = StudentsResource()
 
+class Student(BaseModel):
+    uni: str
+    first_name: str
+    last_name: str
+    email: str
+    school: str
+    year: int
 
 @app.get("/")
 async def root():
-    return {"message": "Hello World EC2 MICROSERVICE"}
+    return {"message": "This is the EC2 students microservice!"}
 
 
 @app.get("/hello/{name}")
@@ -26,11 +34,43 @@ async def say_hello_text(name: str):
     rsp = Response(content=the_message, media_type="text/plain")
     return rsp
 
-
-@app.get("/students")
+# /api/students/
+# GET all students
+@app.get("/students/")
 async def get_students():
-    result = students_resource.get_students()
-    return result
+    return students_resource.get_students()
+
+# /api/students/{uni}
+# GET specific student by UNI
+@app.get("/students/{uni}")
+async def get_students(uni):
+    data = students_resource.get_specific_student(uni)
+    return data
+
+# /api/students/put/{uni}
+# PUT request for student by UNI
+@app.put("/students/{uni}", response_model=Student)
+async def update_student(uni: str, student: Student):
+    return students_resource.get_specific_student(uni)
+
+
+# /api/students/{uni}
+# POST request to update student information
+
+
+
+# /api/students/{uni}
+# DELETE request for student by uni
+@app.delete("/students/{uni}")
+async def delete_student(uni):
+    return delete_student(uni)
+
+# /api/students/{uni}/bookings
+# In the future, add api for bookings for a student specified by the UNI
+
+# /api/students/{uni}/banned-spaces
+# In the future, add banned spaces for a student specified by the UNI
+
 
 
 if __name__ == "__main__":

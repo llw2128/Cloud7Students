@@ -8,7 +8,7 @@ class StudentsResource:
     #
 
     students_file = \
-        "./resources/old-students.json"
+        "./resources/mockStudents.json"
 
     def __init__(self):
         self.students = None
@@ -18,3 +18,18 @@ class StudentsResource:
 
     def get_students(self):
         return self.students
+
+    def get_specific_student(self, uni):
+        try:
+            return self.students[uni]
+        except KeyError:
+            return f"Student not found for uni {uni}"
+    
+    def delete_student(self, uni):
+        try:
+            deleted_student = self.students.pop(uni)
+            with open(self.students_file, 'w') as f:
+                json.dump(self.students, f)
+            return deleted_student
+        except KeyError:
+            return f"Student not found for uni {uni}"
