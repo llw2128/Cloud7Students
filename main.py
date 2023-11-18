@@ -1,5 +1,6 @@
 from fastapi import FastAPI, Response
 from pydantic import BaseModel
+import json
 
 # I like to launch directly and not use the standard FastAPI startup
 import uvicorn
@@ -50,13 +51,16 @@ async def get_students(uni):
 # /api/students/put/{uni}
 # PUT request for student by UNI
 @app.put("/students/{uni}", response_model=Student)
-async def update_student(uni: str, student: Student):
-    return students_resource.get_specific_student(uni)
+async def put_student(uni: str, student: Student):
+    return students_resource.put_student(uni, student)
 
 
 # /api/students/{uni}
 # POST request to update student information
-
+# TODO: handling incomplete post request data
+@app.post("/students/{uni}", response_model=Student)
+async def post_student(uni: str, student: Student):
+    return students_resource.put_student(uni, student)
 
 
 # /api/students/{uni}
