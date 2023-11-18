@@ -2,11 +2,6 @@ import json
 
 
 class StudentsResource:
-    #
-    # This code is just to get us started.
-    # It is also pretty sloppy code.
-    #
-
     students_file = \
         "./resources/mockStudents.json"
 

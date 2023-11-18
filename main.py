@@ -54,7 +54,6 @@ async def get_students(uni):
 async def put_student(uni: str, student: Student):
     return students_resource.put_student(uni, student)
 
-
 # /api/students/{uni}
 # POST request to update student information
 # TODO: handling incomplete post request data
@@ -62,12 +61,11 @@ async def put_student(uni: str, student: Student):
 async def post_student(uni: str, student: Student):
     return students_resource.put_student(uni, student)
 
-
 # /api/students/{uni}
 # DELETE request for student by uni
 @app.delete("/students/{uni}")
 async def delete_student(uni):
-    return delete_student(uni)
+    return students_resource.delete_student(uni)
 
 # /api/students/{uni}/bookings
 # In the future, add api for bookings for a student specified by the UNI
