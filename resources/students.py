@@ -25,32 +25,38 @@ class StudentsResource:
         return self.students
 
     def get_specific_student(self, uni):
-        try:
-            return self.students[uni]
-        except KeyError:
-            return f"Student not found for uni {uni}"
+        for student in self.students:
+            if student["uni"] == uni:
+                return student
+        return f"Student not found for uni {uni}"
     
     def delete_student(self, uni):
-        try:
-            deleted_student = self.students.pop(uni)
-            print(deleted_student)
-            with open(self.students_file, 'w') as f:
-                json.dump(self.students, f)
-            return f"Deleted student with uni {uni} {deleted_student}"
-        except KeyError:
-            return f"Student not found for uni {uni}"
+        for i in range(0, len(self.students)):
+            student = self.students[i]
+            if student["uni"] == uni:
+                self.students.remove(student)
+                with open(self.students_file, 'w') as f:
+                    json.dump(self.students, f)
+                return f"Deleted student with uni {uni} {student}"
+        return f"Student not found for uni {uni}"
 
     """
     Calling the same PUT request multiple times will always 
     produce the same result
     """
     def put_student(self, uni, student):
-        student = self.student_to_json(student)
-        self.students[uni] = student
+        studentToAdd = self.student_to_json(student)
+        found = False
+        for i in range(0, len(self.students)):
+            student = self.students[i]
+            if student["uni"] == uni: # Found so replace
+                self.students[i] = studentToAdd
+                found = True
+        if found is False:
+            self.students.append(studentToAdd)
         with open(self.students_file, 'w') as f:
                 json.dump(self.students, f)
-        return student
-        # return f"Put student with uni {uni} {student}"
+        return f"Put student with uni {uni} {studentToAdd}"
     
     """
     Calling a POST request repeatedly have side effects of 
@@ -58,8 +64,7 @@ class StudentsResource:
     """
     def post_student(self, uni, student):
         student = self.student_to_json(student)
-        self.students[uni] = student
+        self.students.append(student)
         with open(self.students_file, 'w') as f:
                 json.dump(self.students, f)
-        return student
-        # return f"Post student with uni {uni} {student}"
+        return f"Post student with uni {uni} {student}"
