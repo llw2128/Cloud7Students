@@ -40,8 +40,11 @@ class StudentsResource:
         except KeyError:
             return f"Student not found for uni {uni}"
 
+    """
+    Calling the same PUT request multiple times will always 
+    produce the same result
+    """
     def put_student(self, uni, student):
-        print("STUDENT", student)
         student = self.student_to_json(student)
         self.students[uni] = student
         with open(self.students_file, 'w') as f:
@@ -49,8 +52,11 @@ class StudentsResource:
         return student
         # return f"Put student with uni {uni} {student}"
     
+    """
+    Calling a POST request repeatedly have side effects of 
+    creating the same resource multiple times
+    """
     def post_student(self, uni, student):
-        print("STUDENT", student)
         student = self.student_to_json(student)
         self.students[uni] = student
         with open(self.students_file, 'w') as f:

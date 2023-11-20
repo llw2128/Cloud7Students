@@ -56,10 +56,9 @@ async def put_student(uni: str, student: Student):
 
 # /api/students/{uni}
 # POST request to update student information
-# TODO: handling incomplete post request data
 @app.post("/students/{uni}", response_model=Student)
 async def post_student(uni: str, student: Student):
-    return students_resource.put_student(uni, student)
+    return students_resource.post_student(uni, student)
 
 # /api/students/{uni}
 # DELETE request for student by uni
