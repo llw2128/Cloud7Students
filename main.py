@@ -1,5 +1,6 @@
 from fastapi import FastAPI, Response
 from pydantic import BaseModel
+from fastapi_pagination import LimitOffsetPage, add_pagination, paginate
 import json
 
 # I like to launch directly and not use the standard FastAPI startup
@@ -8,6 +9,7 @@ import uvicorn
 from resources.students import StudentsResource
 
 app = FastAPI()
+add_pagination(app)
 
 students_resource = StudentsResource()
 
@@ -21,7 +23,7 @@ class Student(BaseModel):
 
 @app.get("/")
 async def root():
-    return {"message": "This is the EC2 students microservice!"}
+    return {"message": "This is the Cloud7 students microservice deployed on EC2!"}
 
 
 @app.get("/hello/{name}")
@@ -37,9 +39,12 @@ async def say_hello_text(name: str):
 
 # /api/students/
 # GET all students
+# Referenced https://uriyyo-fastapi-pagination.netlify.app/tutorials/limit-offset-pagination/
+# to support pagination for this page
 @app.get("/students/")
-async def get_students():
-    return students_resource.get_students()
+async def get_students() -> LimitOffsetPage[Student]:
+    all_students = students_resource.get_students()
+    return paginate(all_students)
 
 # /api/students/{uni}
 # GET specific student by UNI
