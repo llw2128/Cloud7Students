@@ -45,9 +45,7 @@ class StudentsResource:
     produce the same result
     """
     def put_student(self, uni, student):
-        print(student)
         studentToAdd = self.student_to_json(student)
-        print(studentToAdd)
         found = False
         for i in range(0, len(self.students)):
             student = self.students[i]
