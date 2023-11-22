@@ -36,7 +36,7 @@ class StudentsResource:
             if student["uni"] == uni:
                 self.students.remove(student)
                 with open(self.students_file, 'w') as f:
-                    json.dump(self.students, f)
+                    json.dump(self.students, f, indent=4)
                 return f"Deleted student with uni {uni} {student}"
         return f"Student not found for uni {uni}"
 
@@ -45,7 +45,9 @@ class StudentsResource:
     produce the same result
     """
     def put_student(self, uni, student):
+        print(student)
         studentToAdd = self.student_to_json(student)
+        print(studentToAdd)
         found = False
         for i in range(0, len(self.students)):
             student = self.students[i]
@@ -55,8 +57,8 @@ class StudentsResource:
         if found is False:
             self.students.append(studentToAdd)
         with open(self.students_file, 'w') as f:
-                json.dump(self.students, f)
-        return f"Put student with uni {uni} {studentToAdd}"
+                json.dump(self.students, f, indent=4)
+        return studentToAdd
     
     """
     Calling a POST request repeatedly have side effects of 
@@ -66,5 +68,5 @@ class StudentsResource:
         student = self.student_to_json(student)
         self.students.append(student)
         with open(self.students_file, 'w') as f:
-                json.dump(self.students, f)
-        return f"Post student with uni {uni} {student}"
+                json.dump(self.students, f, indent=4)
+        return student
