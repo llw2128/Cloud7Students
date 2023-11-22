@@ -47,27 +47,6 @@ async def get_students() -> Page[Student]:
     all_students = students_resource.get_students()
     paginated_students = paginate(all_students)
 
-    # items = paginated_students.items
-    # limit = paginated_students.limit
-    # offset = paginated_students.offset
-    # total = paginated_students.total
-
-    # prev_offset = max(0, offset - limit)
-    # next_offset = offset + limit if offset + limit < total else None
-
-    # paginated_links = {
-    #     "current": f"/students/?limit={limit}&offset={offset}",
-    #     "prev": f"/students/?limit={limit}&offset={prev_offset}" if offset > 0 else None,
-    #     "next": f"/students/?limit={limit}&page={next_offset}" if next_offset is not None else None
-    # }
-
-    # paginated_student_list = PaginatedStudentList(
-    #     items = items,
-    #     limit = limit,
-    #     offset = offset,
-    #     total = total,
-    #     links = paginated_links
-    # )
     return paginated_students
 
 # /api/students/{uni}
