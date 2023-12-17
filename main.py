@@ -40,9 +40,6 @@ def getStudentTypes(root) -> typing.List[StudentType]:
 @strawberry.type
 class Query:
     student: typing.List["StudentType"] = strawberry.field(resolver=getStudentTypes)
-    # @strawberry.field
-    # def student(self) -> StudentType:
-    #     return StudentType()
 
 schema = strawberry.Schema(query=Query)
 graphql_app = GraphQL(schema)
