@@ -3,14 +3,39 @@ from pydantic import BaseModel
 from fastapi_pagination import LimitOffsetPage, add_pagination, paginate
 from fastapi_pagination.links import Page
 import json
+from strawberry.asgi import GraphQL
+import strawberry
 
-# I like to launch directly and not use the standard FastAPI startup
+# Launch directly and not use the standard FastAPI startup
 import uvicorn
 
 from resources.students import StudentsResource
 
 app = FastAPI()
 add_pagination(app)
+
+@strawberry.type
+class StudentType:
+    uni: str
+    first_name: str
+    last_name: str
+    email: str
+    school: str
+    year: int
+
+@strawberry.type
+class Query:
+    @strawberry.field
+    def student(self) -> StudentType:
+        return StudentType(uni="jks2223",
+                           first_name="Jack", 
+                           last_nme="Smith", 
+                           email="jks2223@columbia.edu",
+                           school="SEAS",
+                           year=4)
+
+schema = strawberry.Schema(query=Query)
+graphql_app = GraphQL(schema)
 
 students_resource = StudentsResource()
 
@@ -22,15 +47,16 @@ class Student(BaseModel):
     school: str
     year: int
 
+app.add_route("/graphql", graphql_app)
+app.add_websocket_route("/graphql", graphql_app)
+
 @app.get("/")
 async def root():
     return {"message": "This is the Cloud7 students microservice deployed on EC2!"}
 
-
 @app.get("/hello/{name}")
 async def say_hello(name: str):
     return {"message": f"Awesome cloud developer amn2211 says hello {name}"}
-
 
 @app.get("/hello_text/{name}")
 async def say_hello_text(name: str):
@@ -73,14 +99,6 @@ async def post_student(uni: str, student: Student):
 @app.delete("/students/{uni}")
 async def delete_student(uni):
     return students_resource.delete_student(uni)
-
-# /api/students/{uni}/bookings
-# In the future, add api for bookings for a student specified by the UNI
-
-# /api/students/{uni}/banned-spaces
-# In the future, add banned spaces for a student specified by the UNI
-
-
 
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8012)
