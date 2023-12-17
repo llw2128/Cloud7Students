@@ -5,6 +5,7 @@ from fastapi_pagination.links import Page
 import json
 from strawberry.asgi import GraphQL
 import strawberry
+import typing
 
 # Launch directly and not use the standard FastAPI startup
 import uvicorn
@@ -23,16 +24,26 @@ class StudentType:
     school: str
     year: int
 
-@strawberry.type
-class Query:
-    @strawberry.field
-    def student(self) -> StudentType:
-        return StudentType(uni="jks2223",
+def getStudentTypes(root) -> typing.List[StudentType]:
+    return [StudentType(uni="jks2223",
                            first_name="Jack", 
                            last_name="Smith", 
                            email="jks2223@columbia.edu",
                            school="SEAS",
-                           year=4)
+                           year=4),
+            StudentType(uni="ehh2203",
+                           first_name="Eve", 
+                           last_name="Hone", 
+                           email="ehh2203@columbia.edu",
+                           school="CC",
+                           year=2)]
+
+@strawberry.type
+class Query:
+    student: typing.List["StudentType"] = strawberry.field(resolver=getStudentTypes)
+    # @strawberry.field
+    # def student(self) -> StudentType:
+    #     return StudentType()
 
 schema = strawberry.Schema(query=Query)
 graphql_app = GraphQL(schema)
