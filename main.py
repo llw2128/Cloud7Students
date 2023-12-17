@@ -25,18 +25,17 @@ class StudentType:
     year: int
 
 def getStudentTypes(root) -> typing.List[StudentType]:
-    return [StudentType(uni="jks2223",
-                           first_name="Jack", 
-                           last_name="Smith", 
-                           email="jks2223@columbia.edu",
-                           school="SEAS",
-                           year=4),
-            StudentType(uni="ehh2203",
-                           first_name="Eve", 
-                           last_name="Hone", 
-                           email="ehh2203@columbia.edu",
-                           school="CC",
-                           year=2)]
+    allStudentTypes = []
+    all_students = students_resource.get_students()
+    for student in all_students:
+        allStudentTypes.append(StudentType(uni=student["uni"],
+                           first_name=student["first_name"], 
+                           last_name=student["last_name"], 
+                           email=student["email"],
+                           school=student["school"],
+                           year=int(student["year"])))
+    
+    return allStudentTypes
 
 @strawberry.type
 class Query:
