@@ -29,7 +29,7 @@ class Query:
     def student(self) -> StudentType:
         return StudentType(uni="jks2223",
                            first_name="Jack", 
-                           last_nme="Smith", 
+                           last_name="Smith", 
                            email="jks2223@columbia.edu",
                            school="SEAS",
                            year=4)
