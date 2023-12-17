@@ -1,0 +1,6 @@
+Request: GET /, Received at: 2023-12-17 18:04:11, Process time: 0:00:00.003290s 
+Request: GET /auth/login, Received at: 2023-12-17 18:04:17, Process time: 0:00:00.001810s 
+Request: GET /docs, Received at: 2023-12-17 18:04:18, Process time: 0:00:00.001431s 
+Request: GET /openapi.json, Received at: 2023-12-17 18:04:18, Process time: 0:00:00.028647s 
+Request: GET /students/hh2881, Received at: 2023-12-17 18:04:28, Process time: 0:00:00.002371s 
+Request: DELETE /students/hh2881, Received at: 2023-12-17 18:04:43, Process time: 0:00:00.006341s 

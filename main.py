@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Response
+from fastapi import FastAPI, Response, Request
 from pydantic import BaseModel
 from fastapi_pagination import LimitOffsetPage, add_pagination, paginate
 from fastapi_pagination.links import Page
@@ -6,6 +6,7 @@ import json
 from strawberry.asgi import GraphQL
 import strawberry
 import typing
+from datetime import datetime
 
 # Launch directly and not use the standard FastAPI startup
 import uvicorn
@@ -56,6 +57,19 @@ class Student(BaseModel):
 
 app.add_route("/graphql", graphql_app)
 app.add_websocket_route("/graphql", graphql_app)
+
+@app.middleware('http')
+async def log_request_details(request: Request, call_next):
+    method_name = request.method
+    path = request.url.path
+    start_time = datetime.now()
+    response = await call_next(request)
+    process_time = datetime.now() - start_time
+    with open('request_log.txt', mode='a') as file:
+        content = f"Request: {method_name} {path}, Received at: {start_time.strftime('%Y-%m-%d %H:%M:%S')}, Process time: {process_time}s \n"
+        file.write(content)
+
+    return response
 
 @app.get("/")
 async def root():
