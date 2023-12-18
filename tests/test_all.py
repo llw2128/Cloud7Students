@@ -4,7 +4,7 @@ from pytest import mark
 
 tester = StudentsResource()
 
-@mark.parameterize("output",[({
+@mark.parametrize("output",[({
         "uni": "ffn2000",
         "first_name": "Rona",
         "last_name": "Bernardinelli",
