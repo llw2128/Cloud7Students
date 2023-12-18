@@ -14,3 +14,4 @@ fastapi-pagination>=0.10.0
 graphene==3.0b6
 strawberry-graphql
 pytest
+supervisor
