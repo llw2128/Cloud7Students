@@ -13,3 +13,4 @@ uvicorn==0.23.2
 fastapi-pagination==0.12.11
 graphene==3.0b6
 strawberry-graphql
+pytest
