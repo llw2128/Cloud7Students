@@ -4,6 +4,14 @@ from pytest import mark
 
 tester = StudentsResource()
 
-def test_init():
-    assert tester.get_students() is None
+@mark.parameterize("output",[({
+        "uni": "ffn2000",
+        "first_name": "Rona",
+        "last_name": "Bernardinelli",
+        "email": "ffn2000@columbia.edu",
+        "school": "SEAS",
+        "year": 4
+    })])
+def test_init(output):
+    assert output in tester.get_students()
 
