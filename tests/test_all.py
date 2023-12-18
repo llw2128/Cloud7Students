@@ -1,4 +1,4 @@
-from resources import StudentsResource
+from resources.students import StudentsResource
 import pytest as pt
 from pytest import mark
 
