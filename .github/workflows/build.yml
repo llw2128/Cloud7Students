@@ -67,7 +67,7 @@ jobs:
         id: deploy
         run: |
           aws deploy create-deployment \
-            --application-name 	express-app \
-            --deployment-group-name express-stud-group \
+            --application-name 	new-student-deploy \
+            --deployment-group-name studentdeploygroup2 \
             --deployment-config-name CodeDeployDefault.OneAtATime \
             --github-location repository=${{ github.repository }},commitId=${{ github.sha }}
