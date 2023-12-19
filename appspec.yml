@@ -4,6 +4,13 @@ files:
  - source: .
    destination: /home/ec2-user/Cloud7Students
 
+permissions:
+  - object: /home/ec2-user/Cloud7Students
+    pattern: "*-.txt"
+    mode: 777
+    type:
+      - file
+
 hooks:
   
   AfterInstall:
