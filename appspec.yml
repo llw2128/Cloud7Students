@@ -2,7 +2,9 @@ version: 0.0
 os: linux
 files:
  - source: .
-   destination: /home/ec2-user/app
+   destination: /home/ec2-user/Cloud7Students
+file_exists_behavior: OVERWRITE
+
 hooks:
   
   AfterInstall:
