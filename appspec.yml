@@ -3,7 +3,6 @@ os: linux
 files:
  - source: .
    destination: /home/ec2-user/Cloud7Students
-file_exists_behavior: OVERWRITE
 
 hooks:
   
