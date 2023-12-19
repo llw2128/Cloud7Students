@@ -7,4 +7,4 @@
 
 #echo "All servers stopped."
 
-pkill -f python
+#pkill -f python
