@@ -73,7 +73,7 @@ async def log_request_details(request: Request, call_next):
 
 @app.get("/")
 async def root():
-    return {"message": "This is the new2 Cloud7 students microservice deployed on EC2!"}
+    return {"message": "This is the newest Cloud7 students microservice deployed on EC2!"}
 
 @app.get("/hello/{name}")
 async def say_hello(name: str):
