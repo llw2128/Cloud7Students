@@ -1,8 +1,7 @@
 #!/bin/bash
 
 # Stop all supervisor-controlled processes
-sudo unlink /tmp/supervisor.sock
-
+pkill -f python
 # Deactivate the virtual environment
 deactivate
 
