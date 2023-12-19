@@ -35,7 +35,7 @@ jobs:
     #credentials to connect to AWS removed temp
     
     # Runs a set of commands using the runners shell; THIS DOESN'T WORK
-    - name: Run a multi-line script
+    - name: Install Dependencies
       run: |
          #install PIP
          python -m pip install --upgrade pip
@@ -45,11 +45,17 @@ jobs:
          #for installing invidividual modules
          #pip3 install Flask -t .
          #zip files into current directory
-         
+
+    - name: Run Tests
+      run: |
+         python -m pytest -v tests
+         #for installing invidividual modules
+         #pip3 install Flask -t .
+         #zip files into current directory     
+
   continuous-deployment:
     runs-on: ubuntu-latest
     needs: [continuous-integration]
-    if: github.ref == 'refs/heads/main'
     steps:     # Step 1
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
